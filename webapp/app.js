@@ -866,6 +866,36 @@
         }
     }
 
+    function getPaymentMethodsHTML(wuziVal, bpVal, speiVal) {
+        const hasWuzi = wuziVal > 0;
+        const hasBp = bpVal > 0;
+        const hasSpei = speiVal > 0;
+
+        let badges = [];
+
+        if (hasWuzi && hasBp) {
+            badges.push(`<span class="badge" style="background: rgba(0, 212, 255, 0.08); color: #00d4ff; border: 1px solid rgba(0, 212, 255, 0.2); font-weight: 600; padding: 4px 10px;">💳 TPV: Ambas (Wuzi + BP)</span>`);
+        } else if (hasWuzi) {
+            badges.push(`<span class="badge" style="background: rgba(0, 212, 255, 0.08); color: #00d4ff; border: 1px solid rgba(0, 212, 255, 0.15); font-weight: 600; padding: 4px 10px;">💳 TPV: Wuzi</span>`);
+        } else if (hasBp) {
+            badges.push(`<span class="badge" style="background: rgba(123, 47, 247, 0.08); color: #b18eff; border: 1px solid rgba(123, 47, 247, 0.15); font-weight: 600; padding: 4px 10px;">💳 TPV: BP</span>`);
+        }
+
+        if (hasSpei) {
+            if (hasWuzi || hasBp) {
+                badges.push(`<span class="badge" style="background: rgba(255, 68, 102, 0.08); color: #ff4466; border: 1px solid rgba(255, 68, 102, 0.15); font-weight: 600; padding: 4px 10px;">🏦 SPEI (Multicanal)</span>`);
+            } else {
+                badges.push(`<span class="badge" style="background: rgba(255, 68, 102, 0.08); color: #ff4466; border: 1px solid rgba(255, 68, 102, 0.15); font-weight: 600; padding: 4px 10px;">🏦 Solo SPEI</span>`);
+            }
+        }
+
+        if (badges.length === 0) {
+            return `<span class="badge" style="background: rgba(255, 255, 255, 0.04); color: var(--text-muted); border: 1px solid rgba(255, 255, 255, 0.08); font-weight: 600; padding: 4px 10px;">Sin transacciones</span>`;
+        }
+
+        return `<div style="display: flex; gap: 8px; flex-wrap: wrap;">${badges.join('')}</div>`;
+    }
+
     // Badge builders
     function tendenciaBadge(t) {
         const tl = (t || '').toLowerCase();
@@ -951,6 +981,14 @@
 
         // Title
         $('#detail-title').textContent = holder;
+
+        const wuziVal = prow ? parseNum(prow.Wuzi) : 0;
+        const bpVal = prow ? parseNum(prow.BP) : 0;
+        const speiVal = prow ? parseNum(prow.SPEI) : 0;
+        const paymentMethodsEl = $('#detail-payment-methods');
+        if (paymentMethodsEl) {
+            paymentMethodsEl.innerHTML = getPaymentMethodsHTML(wuziVal, bpVal, speiVal);
+        }
 
         // Subtitle (Ranking, Director, Vendedor, Context)
         const subEl = $('#detail-subtitle');
