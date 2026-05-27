@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
 
@@ -90,7 +90,7 @@
         <!-- Section 1: Dashboard Overview -->
         <section class="tab-content active" id="section-overview">
             <!-- KPI Cards -->
-            <div class="kpi-grid">
+            <div class="kpi-grid kpi-grid-top">
                 <div class="kpi-card kpi-total">
                     <div class="kpi-icon">🏪</div>
                     <div class="kpi-value" id="kpi-total">0</div>
@@ -126,6 +126,9 @@
                     <div class="kpi-value" id="kpi-salud-sinactividad">0</div>
                     <div class="kpi-label">Sin Actividad</div>
                 </div>
+            </div>
+
+            <div class="kpi-grid kpi-grid-bottom">
                 <div class="kpi-card kpi-tpv">
                     <div class="kpi-icon">💳</div>
                     <div class="kpi-value" id="kpi-tpv">0</div>

@@ -294,7 +294,7 @@ body::before {
 /* ========= KPI CARDS ========= */
 .kpi-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
     gap: 16px;
     margin-bottom: 28px;
 }
@@ -341,9 +341,7 @@ body::before {
 .kpi-spei .kpi-value { background: linear-gradient(135deg, #b18eff, #ff4466); -webkit-background-clip: text; background-clip: text; }
 .kpi-contracargos .kpi-value { background: linear-gradient(135deg, #ff4466, #ff7043); -webkit-background-clip: text; background-clip: text; }
 
-.kpi-tpv {
-    grid-column-start: 1;
-}
+
 
 /* ========= CHART CARDS ========= */
 .charts-grid-2 {
@@ -667,7 +665,7 @@ body::before {
         margin-top: 2px;
     }
     .main-content { padding: 16px 16px 40px; }
-    .kpi-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+    .kpi-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
     .kpi-value { font-size: 26px; }
     .app-title { font-size: 18px; }
     .table-controls { flex-direction: column; align-items: stretch; gap: 12px; }
