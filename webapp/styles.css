@@ -341,6 +341,10 @@ body::before {
 .kpi-spei .kpi-value { background: linear-gradient(135deg, #b18eff, #ff4466); -webkit-background-clip: text; background-clip: text; }
 .kpi-contracargos .kpi-value { background: linear-gradient(135deg, #ff4466, #ff7043); -webkit-background-clip: text; background-clip: text; }
 
+.kpi-tpv {
+    grid-column-start: 1;
+}
+
 /* ========= CHART CARDS ========= */
 .charts-grid-2 {
     display: grid;
