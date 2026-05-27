@@ -403,12 +403,21 @@
         animateCounter($('#kpi-salud-constante'), constante);
         animateCounter($('#kpi-salud-intermitente'), intermitente);
         animateCounter($('#kpi-salud-riesgo'), abandono);
-        animateCounter($('#kpi-salud-sinactividad'), sinActividad);
-        animateCounter($('#kpi-tpv'), tpvCount);
-        animateCounter($('#kpi-spei'), speiCount);
+        
+        const kpiSinActividad = $('#kpi-salud-sinactividad');
+        if (kpiSinActividad) animateCounter(kpiSinActividad, sinActividad);
 
-        $('#kpi-tpv-breakdown').textContent = `Wuzi: ${wuziOnly} | BP: ${bpOnly} | Ambas: ${tpvBoth}`;
-        $('#kpi-spei-breakdown').textContent = `Solo SPEI: ${speiOnly} | Ambas: ${speiBoth}`;
+        const kpiTpv = $('#kpi-tpv');
+        if (kpiTpv) animateCounter(kpiTpv, tpvCount);
+
+        const kpiSpei = $('#kpi-spei');
+        if (kpiSpei) animateCounter(kpiSpei, speiCount);
+
+        const kpiTpvBreakdown = $('#kpi-tpv-breakdown');
+        if (kpiTpvBreakdown) kpiTpvBreakdown.textContent = `Wuzi: ${wuziOnly} | BP: ${bpOnly} | Ambas: ${tpvBoth}`;
+
+        const kpiSpeiBreakdown = $('#kpi-spei-breakdown');
+        if (kpiSpeiBreakdown) kpiSpeiBreakdown.textContent = `Solo SPEI: ${speiOnly} | Ambas: ${speiBoth}`;
 
         const sinActividadCard = $('.kpi-card.kpi-salud-sinactividad');
         if (sinActividadCard) {
