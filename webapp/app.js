@@ -462,7 +462,7 @@
         if (kpiSpei) animateCounter(kpiSpei, speiCount);
 
         const kpiContracargos = $('#kpi-contracargos');
-        if (kpiContracargos) animateCounter(kpiContracargos, totalContracargos2026);
+        if (kpiContracargos) animateCounter(kpiContracargos, affectedComerciosCount);
 
         const kpiTpvBreakdown = $('#kpi-tpv-breakdown');
         if (kpiTpvBreakdown) kpiTpvBreakdown.textContent = `Wuzi: ${wuziOnly} | BP: ${bpOnly} | Ambas: ${tpvBoth}`;
@@ -471,7 +471,7 @@
         if (kpiSpeiBreakdown) kpiSpeiBreakdown.textContent = `Solo SPEI: ${speiOnly} | Ambas: ${speiBoth}`;
 
         const kpiContracargosBreakdown = $('#kpi-contracargos-breakdown');
-        if (kpiContracargosBreakdown) kpiContracargosBreakdown.textContent = `Comercios afectados: ${affectedComerciosCount}`;
+        if (kpiContracargosBreakdown) kpiContracargosBreakdown.textContent = `Total contracargos: ${totalContracargos2026}`;
 
         const sinActividadCard = $('.kpi-card.kpi-salud-sinactividad');
         if (sinActividadCard) {
