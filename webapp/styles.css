@@ -337,6 +337,8 @@ body::before {
 .kpi-salud-intermitente .kpi-value { background: linear-gradient(135deg, #ffab00, #ffd740); -webkit-background-clip: text; background-clip: text; }
 .kpi-salud-riesgo .kpi-value { background: linear-gradient(135deg, #ff4466, #ff7043); -webkit-background-clip: text; background-clip: text; }
 .kpi-salud-sinactividad .kpi-value { background: linear-gradient(135deg, #8a94a8, #5a6478); -webkit-background-clip: text; background-clip: text; }
+.kpi-tpv .kpi-value { background: linear-gradient(135deg, #00d4ff, #0088ff); -webkit-background-clip: text; background-clip: text; }
+.kpi-spei .kpi-value { background: linear-gradient(135deg, #b18eff, #ff4466); -webkit-background-clip: text; background-clip: text; }
 
 /* ========= CHART CARDS ========= */
 .charts-grid-2 {

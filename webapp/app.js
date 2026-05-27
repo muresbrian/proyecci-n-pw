@@ -355,6 +355,48 @@
             else if (s.includes('sin actividad')) sinActividad++;
         });
 
+        // --- TPV & SPEI KPIs ---
+        let tpvCount = 0;
+        let wuziOnly = 0;
+        let bpOnly = 0;
+        let tpvBoth = 0;
+
+        let speiCount = 0;
+        let speiOnly = 0;
+        let speiBoth = 0;
+
+        proy.forEach(r => {
+            if (!r.Holder || !activeNormalizedSet.has(normalizeHolder(r.Holder))) return;
+            const wuziVal = parseNum(r.Wuzi);
+            const bpVal = parseNum(r.BP);
+            const speiVal = parseNum(r.SPEI);
+
+            const hasWuzi = wuziVal > 0;
+            const hasBp = bpVal > 0;
+            const hasTpv = hasWuzi || hasBp;
+            const hasSpei = speiVal > 0;
+
+            if (hasTpv) {
+                tpvCount++;
+                if (hasWuzi && hasBp) {
+                    tpvBoth++;
+                } else if (hasWuzi) {
+                    wuziOnly++;
+                } else if (hasBp) {
+                    bpOnly++;
+                }
+            }
+
+            if (hasSpei) {
+                speiCount++;
+                if (hasTpv) {
+                    speiBoth++;
+                } else {
+                    speiOnly++;
+                }
+            }
+        });
+
         animateCounter($('#kpi-total'), totalComercios);
         animateCounter($('#kpi-alza'), alza);
         animateCounter($('#kpi-baja'), baja);
@@ -362,6 +404,11 @@
         animateCounter($('#kpi-salud-intermitente'), intermitente);
         animateCounter($('#kpi-salud-riesgo'), abandono);
         animateCounter($('#kpi-salud-sinactividad'), sinActividad);
+        animateCounter($('#kpi-tpv'), tpvCount);
+        animateCounter($('#kpi-spei'), speiCount);
+
+        $('#kpi-tpv-breakdown').textContent = `Wuzi: ${wuziOnly} | BP: ${bpOnly} | Ambas: ${tpvBoth}`;
+        $('#kpi-spei-breakdown').textContent = `Solo SPEI: ${speiOnly} | Ambas: ${speiBoth}`;
 
         const sinActividadCard = $('.kpi-card.kpi-salud-sinactividad');
         if (sinActividadCard) {
