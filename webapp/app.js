@@ -793,6 +793,7 @@
         const filtDiag = $('#filter-diagnostico').value;
         const filtSalud = $('#filter-salud').value;
         const filtDir = $('#filter-director') ? $('#filter-director').value : '';
+        const filtVend = $('#filter-vendedor') ? $('#filter-vendedor').value : '';
 
         tableFiltered = tableData.filter(r => {
             if (search && !r.holder.toLowerCase().includes(search)) return false;
@@ -800,6 +801,7 @@
             if (filtDiag && !r.diagnostico.toLowerCase().includes(filtDiag.toLowerCase())) return false;
             if (filtSalud && !r.salud.toLowerCase().includes(filtSalud.toLowerCase())) return false;
             if (filtDir && r.director.toLowerCase() !== filtDir.toLowerCase()) return false;
+            if (filtVend && r.vendedor.toLowerCase() !== filtVend.toLowerCase()) return false;
             return true;
         });
 
@@ -924,6 +926,10 @@
         if (filterDir) {
             filterDir.addEventListener('change', applyTableFilters);
         }
+        const filterVend = $('#filter-vendedor');
+        if (filterVend) {
+            filterVend.addEventListener('change', applyTableFilters);
+        }
     }
 
     function getPaymentMethodsHTML(wuziVal, bpVal, speiVal) {
@@ -1015,6 +1021,23 @@
 
         select.innerHTML = '<option value="">Todos los Directores</option>' +
             sortedDirectors.map(d => `<option value="${escHtml(d)}">${escHtml(d)}</option>`).join('');
+    }
+
+    function populateVendedorFilter() {
+        const vendedores = new Set();
+        (DATA.ranking || []).forEach(r => {
+            if (r.Vendedor) {
+                const vend = r.Vendedor.trim();
+                if (vend) vendedores.add(vend);
+            }
+        });
+
+        const sortedVendedores = Array.from(vendedores).sort((a, b) => a.localeCompare(b, 'es'));
+        const select = $('#filter-vendedor');
+        if (!select) return;
+
+        select.innerHTML = '<option value="">Todos los Vendedores</option>' +
+            sortedVendedores.map(v => `<option value="${escHtml(v)}">${escHtml(v)}</option>`).join('');
     }
 
     // ══════════════════════════════
@@ -1693,6 +1716,7 @@
             calculateAbonosTotales();
             computeTop300();
             populateDirectorFilter();
+            populateVendedorFilter();
 
             renderOverview();
 
@@ -1751,6 +1775,7 @@
         const diagVal = $('#filter-diagnostico').value;
         const saludVal = $('#filter-salud').value;
         const dirVal = $('#filter-director') ? $('#filter-director').value : '';
+        const vendVal = $('#filter-vendedor') ? $('#filter-vendedor').value : '';
 
         const activeFilters = [];
         if (searchVal) activeFilters.push(`Búsqueda: "${searchVal}"`);
@@ -1758,6 +1783,7 @@
         if (diagVal) activeFilters.push(`Diagnóstico: ${diagVal}`);
         if (saludVal) activeFilters.push(`Salud: ${saludVal}`);
         if (dirVal) activeFilters.push(`Director: ${dirVal}`);
+        if (vendVal) activeFilters.push(`Vendedor: ${vendVal}`);
         if (showOnlyTop300) activeFilters.push(`Top 300`);
 
         txt += `Filtros: ${activeFilters.length > 0 ? activeFilters.join(', ') : 'Ninguno'}\n`;
