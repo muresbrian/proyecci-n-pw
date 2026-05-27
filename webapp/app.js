@@ -24,6 +24,7 @@
         ranking:        'Ranking.csv',
         trxSem:         'TRX_SEM_clean.csv',
         contexto:       'Contexto_Holders.csv',
+        contracargos:   'Contracargos.csv',
     };
 
     // ── Global data store ──
@@ -62,6 +63,40 @@
             .toUpperCase()
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '');
+    };
+    const sumContracargos2026 = (row) => {
+        if (!row) return 0;
+        let sum = 0;
+        Object.keys(row).forEach(k => {
+            if (k.startsWith('Semana ') && k.includes('2026')) {
+                sum += parseNum(row[k]);
+            }
+        });
+        return sum;
+    };
+    const getSemanasContracargos = (row) => {
+        if (!row) return [];
+        const list = [];
+        Object.keys(row).forEach(k => {
+            if (k.startsWith('Semana ')) {
+                const count = parseNum(row[k]);
+                if (count > 0) {
+                    list.push({ weekStr: k, count });
+                }
+            }
+        });
+        list.sort((a, b) => {
+            const mA = a.weekStr.match(/Semana (\d+) (\d{4})/);
+            const mB = b.weekStr.match(/Semana (\d+) (\d{4})/);
+            if (mA && mB) {
+                const wA = parseInt(mA[1]), yA = parseInt(mA[2]);
+                const wB = parseInt(mB[1]), yB = parseInt(mB[2]);
+                if (yA !== yB) return yA - yB;
+                return wA - wB;
+            }
+            return a.weekStr.localeCompare(b.weekStr);
+        });
+        return list;
     };
 
     function extractWeekCols() {
@@ -397,6 +432,19 @@
             }
         });
 
+        let totalContracargos2026 = 0;
+        let affectedComerciosCount = 0;
+        const contracargosData = DATA.contracargos || [];
+
+        contracargosData.forEach(r => {
+            if (!r.Holder || !activeNormalizedSet.has(normalizeHolder(r.Holder))) return;
+            const rowSum = sumContracargos2026(r);
+            if (rowSum > 0) {
+                totalContracargos2026 += rowSum;
+                affectedComerciosCount++;
+            }
+        });
+
         animateCounter($('#kpi-total'), totalComercios);
         animateCounter($('#kpi-alza'), alza);
         animateCounter($('#kpi-baja'), baja);
@@ -413,11 +461,17 @@
         const kpiSpei = $('#kpi-spei');
         if (kpiSpei) animateCounter(kpiSpei, speiCount);
 
+        const kpiContracargos = $('#kpi-contracargos');
+        if (kpiContracargos) animateCounter(kpiContracargos, totalContracargos2026);
+
         const kpiTpvBreakdown = $('#kpi-tpv-breakdown');
         if (kpiTpvBreakdown) kpiTpvBreakdown.textContent = `Wuzi: ${wuziOnly} | BP: ${bpOnly} | Ambas: ${tpvBoth}`;
 
         const kpiSpeiBreakdown = $('#kpi-spei-breakdown');
         if (kpiSpeiBreakdown) kpiSpeiBreakdown.textContent = `Solo SPEI: ${speiOnly} | Ambas: ${speiBoth}`;
+
+        const kpiContracargosBreakdown = $('#kpi-contracargos-breakdown');
+        if (kpiContracargosBreakdown) kpiContracargosBreakdown.textContent = `Comercios afectados: ${affectedComerciosCount}`;
 
         const sinActividadCard = $('.kpi-card.kpi-salud-sinactividad');
         if (sinActividadCard) {
@@ -650,6 +704,7 @@
         html += `<th data-sort="proyeccion" class="${getClass('proyeccion')} sort-num">Proyección Cierre <span class="sort-icon">${getIcon('proyeccion')}</span></th>`;
         html += `<th data-sort="diagnostico" class="${getClass('diagnostico')}">Diagnóstico <span class="sort-icon">${getIcon('diagnostico')}</span></th>`;
         html += `<th data-sort="salud" class="${getClass('salud')}">Salud <span class="sort-icon">${getIcon('salud')}</span></th>`;
+        html += `<th data-sort="contracargos" class="${getClass('contracargos')} sort-num">Contracargos <span class="sort-icon">${getIcon('contracargos')}</span></th>`;
 
         weekCols.forEach(col => {
             const label = formatWeekHeader(col);
@@ -705,6 +760,9 @@
                 if (cols.length > 0) varMes = parseNum(vmrow[cols[cols.length - 1]]);
             }
             const rPos = rrow && rrow.Ranking ? parseInt(rrow.Ranking) : null;
+            const ccrow = getRow('contracargos', h);
+            const totalCC2026 = sumContracargos2026(ccrow);
+
             const rowObj = {
                 holder: h,
                 ranking: rPos,
@@ -717,6 +775,7 @@
                 tendencia: trow ? (trow.Tendencia_Mes || '').trim() : '',
                 diagnostico: prow ? (prow.Diagnostico || '').trim() : '',
                 salud: srow ? (srow['Semáforo'] || '').trim() : 'Sin Actividad',
+                contracargos: totalCC2026,
             };
 
             // Populate all week columns
@@ -801,6 +860,7 @@
                 <td>${fmtCurrency(r.proyeccion)}</td>
                 <td>${diagnosticoBadge(r.diagnostico, r.promedio, r.proyeccion)}</td>
                 <td>${semaforoBadge(r.salud)}</td>
+                <td>${r.contracargos > 0 ? `<span class="badge badge-no" style="font-weight: 700;">${r.contracargos}</span>` : `<span style="opacity: 0.4;">0</span>`}</td>
                 ${weekCells}
             </tr>`;
         }).join('');
@@ -979,8 +1039,15 @@
         const rrow = getRow('ranking', holder);
         const trxSemRow = getRow('trxSem', holder);
 
-        // Title
-        $('#detail-title').textContent = holder;
+        // Title & Contracargos Alert Badge
+        const ccrow = getRow('contracargos', holder);
+        const totalCC2026 = sumContracargos2026(ccrow);
+
+        if (totalCC2026 > 0) {
+            $('#detail-title').innerHTML = `${escHtml(holder)} <span class="badge badge-no" style="font-size: 14px; padding: 4px 12px; margin-left: 8px; vertical-align: middle; box-shadow: 0 0 10px rgba(255, 68, 102, 0.2);">⚠️ ${totalCC2026} Contracargo${totalCC2026 > 1 ? 's' : ''}</span>`;
+        } else {
+            $('#detail-title').textContent = holder;
+        }
 
         const wuziVal = prow ? parseNum(prow.Wuzi) : 0;
         const bpVal = prow ? parseNum(prow.BP) : 0;
@@ -1056,6 +1123,34 @@
             $('#det-salud-status').textContent = '—';
             $('#det-salud-semanas').textContent = '—';
             $('#det-salud-inactividad').textContent = '—';
+        }
+
+        const detSaludCC = $('#det-salud-contracargos');
+        if (detSaludCC) {
+            if (totalCC2026 > 0) {
+                detSaludCC.innerHTML = `<span style="color: var(--red); font-weight: 700;">${totalCC2026}</span>`;
+            } else {
+                detSaludCC.textContent = '0';
+            }
+        }
+
+        // List of weeks with chargebacks
+        const ccListCard = $('#det-contracargos-card');
+        const ccListUl = $('#det-contracargos-list');
+        if (ccListCard && ccListUl) {
+            const weeksList = getSemanasContracargos(ccrow);
+            if (weeksList.length > 0) {
+                ccListUl.innerHTML = weeksList.map(item => {
+                    const formattedWeek = item.weekStr.replace(/Semana (\d+) (\d{4})/, 'Semana $1 ($2)');
+                    return `<li style="background: rgba(255, 68, 102, 0.05); border: 1px solid rgba(255, 68, 102, 0.15); padding: 8px 12px; border-radius: var(--radius-xs); font-size: 13px; color: var(--text-primary); font-weight: 500;">
+                        <span style="color: var(--red); font-weight: 700; margin-right: 6px;">•</span> ${escHtml(formattedWeek)}: <strong style="color: var(--red);">${item.count}</strong> contracargo${item.count > 1 ? 's' : ''}
+                    </li>`;
+                }).join('');
+                ccListCard.style.display = '';
+            } else {
+                ccListCard.style.display = 'none';
+                ccListUl.innerHTML = '';
+            }
         }
 
         // Charts
@@ -1685,7 +1780,7 @@
             txt += `*${idx + 1}. ${r.holder}* (Rank: ${rankText})\n`;
             txt += `• Dir: ${r.director || '—'} | Vend: ${r.vendedor || '—'}\n`;
             txt += `• Abonos Mayo: ${fmtCurrency(r.abonos)} | Prom. Hist: ${fmtCurrency(r.promedio)} | Proy. Cierre: ${fmtCurrency(r.proyeccion)}\n`;
-            txt += `• Salud: ${r.salud || '—'} | Diagnóstico: *${fullDiag}*\n`;
+            txt += `• Salud: ${r.salud || '—'} | Diagnóstico: *${fullDiag}* | Contracargos: *${r.contracargos || 0}*\n`;
             txt += `---------------------------------------------\n`;
         });
         return txt;

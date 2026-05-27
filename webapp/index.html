@@ -134,6 +134,12 @@
                     <div class="kpi-label">Con TPV (Wuzi/BP)</div>
                     <div class="kpi-sub-label" id="kpi-tpv-breakdown" style="font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 500;">Wuzi: 0 | BP: 0 | Ambas: 0</div>
                 </div>
+                <div class="kpi-card kpi-contracargos">
+                    <div class="kpi-icon">🚨</div>
+                    <div class="kpi-value" id="kpi-contracargos">0</div>
+                    <div class="kpi-label">Contracargos (2026)</div>
+                    <div class="kpi-sub-label" id="kpi-contracargos-breakdown" style="font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 500;">Comercios afectados: 0</div>
+                </div>
                 <div class="kpi-card kpi-spei">
                     <div class="kpi-icon">🏦</div>
                     <div class="kpi-value" id="kpi-spei">0</div>
@@ -234,6 +240,7 @@
                             <th data-sort="tendencia" class="sortable">Tendencia <span class="sort-icon">⇅</span></th>
                             <th data-sort="diagnostico" class="sortable">Diagnóstico <span class="sort-icon">⇅</span></th>
                             <th data-sort="salud" class="sortable">Salud <span class="sort-icon">⇅</span></th>
+                            <th data-sort="contracargos" class="sortable sort-num">Contracargos <span class="sort-icon">⇅</span></th>
                         </tr>
                     </thead>
                     <tbody id="table-body"></tbody>
@@ -339,7 +346,24 @@
                             <div class="payroll-stat-label">% Inactividad</div>
                             <div class="payroll-stat-value" id="det-salud-inactividad">—</div>
                         </div>
+                        <div class="payroll-stat">
+                            <div class="payroll-stat-label">Contracargos (2026)</div>
+                            <div class="payroll-stat-value" id="det-salud-contracargos">—</div>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Contracargos Detail List (hidden by default) -->
+            <div class="payroll-card" id="det-contracargos-card" style="display: none; border-color: rgba(255, 68, 102, 0.3); margin-bottom: 24px;">
+                <div class="payroll-header" style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 18px;">⚠️</span>
+                    <h3 style="color: var(--red); margin: 0;">Semanas con Contracargos Registrados</h3>
+                </div>
+                <div class="payroll-body" style="display: block; padding: 18px 22px 22px;">
+                    <ul id="det-contracargos-list" style="list-style-type: none; margin-left: 0; padding-left: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px;">
+                        <!-- Injected via JS -->
+                    </ul>
                 </div>
             </div>
 
