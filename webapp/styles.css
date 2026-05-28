@@ -541,6 +541,9 @@ body::before {
 .detail-kpi-card:hover { border-color: rgba(0,212,255,0.15); box-shadow: var(--shadow-glow-cyan); }
 .detail-kpi-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; font-weight: 600; }
 .detail-kpi-value { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+.kpi-det-wuzi .detail-kpi-value { background: linear-gradient(135deg, #00d4ff, #0088ff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.kpi-det-bp .detail-kpi-value { background: linear-gradient(135deg, #7b2ff7, #b18eff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.kpi-det-spei .detail-kpi-value { background: linear-gradient(135deg, #ff4466, #ff7043); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
 .detail-badges-row {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));

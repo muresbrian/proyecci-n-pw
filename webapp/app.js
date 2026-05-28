@@ -25,6 +25,9 @@
         trxSem:         'TRX_SEM_clean.csv',
         contexto:       'Contexto_Holders.csv',
         contracargos:   'Contracargos.csv',
+        wuziSemanal:    'Wuzi_Semanal.csv',
+        bpSemanal:      'BP_Semanal.csv',
+        speiSemanal:    'SPEI_Semanal.csv',
     };
 
     // ── Global data store ──
@@ -63,6 +66,31 @@
             .toUpperCase()
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '');
+    };
+    const getLatestWeeksComparison = (row) => {
+        if (!row) return { current: 0, previous: 0, diff: 0, pct: 0 };
+        const weekKeys = Object.keys(row).filter(k => /^\d{4}-\d{2}-\d{2}\/\d{4}-\d{2}-\d{2}$/.test(k));
+        weekKeys.sort();
+        if (weekKeys.length === 0) {
+            return { current: 0, previous: 0, diff: 0, pct: 0 };
+        }
+        const currentKey = weekKeys[weekKeys.length - 1];
+        const previousKey = weekKeys.length > 1 ? weekKeys[weekKeys.length - 2] : null;
+        const current = parseNum(row[currentKey]);
+        const previous = previousKey ? parseNum(row[previousKey]) : 0;
+        const diff = current - previous;
+        const pct = previous > 0 ? (diff / previous) * 100 : 0;
+        return { current, previous, diff, pct };
+    };
+    const formatComparisonSubLabel = (comp) => {
+        if (comp.current === 0 && comp.previous === 0) {
+            return '<span style="color: var(--text-muted);">Sin abonos en últimas 2 sem.</span>';
+        }
+        const diffStr = comp.diff >= 0 ? '+' : '';
+        const pctStr = comp.previous > 0 ? ` (${diffStr}${Math.round(comp.pct)}%)` : (comp.current > 0 ? ' (Nuevo)' : '');
+        const color = comp.diff > 0 ? 'var(--green)' : (comp.diff < 0 ? 'var(--red)' : 'var(--text-muted)');
+        const arrow = comp.diff > 0 ? '▲' : (comp.diff < 0 ? '▼' : '■');
+        return `<span style="color: ${color}; font-weight: 600;">${arrow} ${fmtCurrency(comp.diff)}${pctStr}</span> <span style="color: var(--text-muted); font-size: 10px;">vs ${fmtCurrency(comp.previous)} ant.</span>`;
     };
     const sumContracargos2026 = (row) => {
         if (!row) return 0;
@@ -1098,6 +1126,24 @@
         $('#det-abonos').textContent = prow ? fmtCurrency(parseNum(prow.Abonos_Actuales_Mayo)) : '—';
         $('#det-promedio').textContent = prow ? fmtCurrency(parseNum(prow.Promedio_Mensual_Historico)) : '—';
         $('#det-proyeccion').textContent = prow ? fmtCurrency(parseNum(prow.Proyeccion_Cierre_Mayo)) : '—';
+
+        // Métodos de pago semanal comparativo (Wuzi, BP, SPEI)
+        const wuziRow = getRow('wuziSemanal', holder);
+        const bpRow = getRow('bpSemanal', holder);
+        const speiRow = getRow('speiSemanal', holder);
+
+        const wuziComp = getLatestWeeksComparison(wuziRow);
+        const bpComp = getLatestWeeksComparison(bpRow);
+        const speiComp = getLatestWeeksComparison(speiRow);
+
+        $('#det-wuzi-sem').textContent = fmtCurrency(wuziComp.current);
+        $('#det-wuzi-sem-diff').innerHTML = formatComparisonSubLabel(wuziComp);
+
+        $('#det-bp-sem').textContent = fmtCurrency(bpComp.current);
+        $('#det-bp-sem-diff').innerHTML = formatComparisonSubLabel(bpComp);
+
+        $('#det-spei-sem').textContent = fmtCurrency(speiComp.current);
+        $('#det-spei-sem-diff').innerHTML = formatComparisonSubLabel(speiComp);
 
         const diagEl = $('#det-diagnostico');
         if (prow && prow.Diagnostico) {
