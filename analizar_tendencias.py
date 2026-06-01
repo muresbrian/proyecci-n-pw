@@ -137,6 +137,12 @@ def procesar_datos():
         df_sem = pd.read_excel('TRX WU_BP.xlsx', sheet_name='Semáforo')
         cols = df_sem.columns.tolist()
         
+        # Preparar dataframe para exportar a TRX_SEM_clean
+        df_sem_export = df_sem.copy()
+        if len(df_sem_export.columns) >= 2:
+            df_sem_export.rename(columns={df_sem_export.columns[0]: 'Director', df_sem_export.columns[1]: 'Holder'}, inplace=True)
+
+        
         # Identificar columnas cronológicas y ordenarlas
         semanas_25 = [c for c in cols if str(c).startswith('Semana') and '2025' in str(c)]
         semanas_26 = [c for c in cols if str(c).startswith('Semana') and '2026' in str(c)]
@@ -204,6 +210,7 @@ def procesar_datos():
     except Exception as e:
         print(f"Error al procesar hoja Semáforo: {e}")
         semaforo_df = pd.DataFrame()
+        df_sem_export = pd.DataFrame()
 
     # --- PROCESAR HOJA DE RANKING (SI EXISTE) ---
     ranking_df = pd.DataFrame()
@@ -223,6 +230,9 @@ def procesar_datos():
         
         if not semaforo_df.empty:
             semaforo_df.to_excel(writer, sheet_name='Semaforo_Salud')
+            
+        if 'df_sem_export' in locals() and not df_sem_export.empty:
+            df_sem_export.to_excel(writer, sheet_name='TRX_SEM_clean', index=False)
             
         if not ranking_df.empty:
             # Guardamos sin index para conservar las columnas limpias
