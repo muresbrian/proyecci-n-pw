@@ -22,7 +22,7 @@
         variacionSemanal:'Variacion_Semanal.csv',
         semaforo:       'Semaforo_Salud.csv',
         ranking:        'Ranking.csv',
-        trxSem:         'TRX_SEM_clean.csv',
+        // trxSem:         'TRX_SEM_clean.csv',
         contexto:       'Contexto_Holders.csv',
         contracargos:   'Contracargos.csv',
         wuziSemanal:    'Wuzi_Semanal.csv',
@@ -1088,7 +1088,7 @@
         const pqrow = getRow('patronesQuincena', holder);
         const srow = getRow('semaforo', holder);
         const rrow = getRow('ranking', holder);
-        const trxSemRow = getRow('trxSem', holder);
+        const trxSemRow = null; // getRow('trxSem', holder);
 
         // Title & Contracargos Alert Badge
         const ccrow = getRow('contracargos', holder);
