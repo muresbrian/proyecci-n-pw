@@ -537,10 +537,16 @@ body::before {
     border-radius: var(--radius);
     padding: 20px; text-align: center;
     transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 .detail-kpi-card:hover { border-color: rgba(0,212,255,0.15); box-shadow: var(--shadow-glow-cyan); }
 .detail-kpi-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; font-weight: 600; }
 .detail-kpi-value { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+.detail-kpi-value .badge { white-space: normal; line-height: 1.3; }
 .kpi-det-wuzi .detail-kpi-value { background: linear-gradient(135deg, #00d4ff, #0088ff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .kpi-det-bp .detail-kpi-value { background: linear-gradient(135deg, #7b2ff7, #b18eff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .kpi-det-spei .detail-kpi-value { background: linear-gradient(135deg, #ff4466, #ff7043); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }

@@ -65,18 +65,23 @@ def procesar_datos():
     resumen_total = resumen_mes.join(resumen_sem).sort_values('Variacion_Ultimo_Mes', ascending=False)
 
     # --- PROYECCIÓN (SOBRE 2026) ---
-    print("Calculando proyecciones para el cierre de mes...")
-    df_mayo = df[(df['Date'].dt.year == 2026) & (df['Date'].dt.month == 5)].copy()
-    df_historico = df[~((df['Date'].dt.year == 2026) & (df['Date'].dt.month == 5))]
+    # Determinar mes actual dinámicamente
+    max_date = df['Date'].max()
+    current_year = max_date.year
+    current_month = max_date.month
+
+    print(f"Calculando proyecciones para el cierre de mes ({current_month}/{current_year})...")
+    df_actual = df[(df['Date'].dt.year == current_year) & (df['Date'].dt.month == current_month)].copy()
+    df_historico = df[~((df['Date'].dt.year == current_year) & (df['Date'].dt.month == current_month))]
 
     totales_por_mes = df_historico.groupby(['Holder', 'Mes'])['Abonos'].sum().reset_index()
     promedio_mensual = totales_por_mes.groupby('Holder')['Abonos'].mean().reset_index()
     promedio_mensual.rename(columns={'Abonos': 'Promedio_Mensual_Historico'}, inplace=True)
 
-    totales_mayo = df_mayo.groupby('Holder')['Abonos'].sum().reset_index()
-    totales_mayo.rename(columns={'Abonos': 'Abonos_Actuales_Mayo'}, inplace=True)
+    totales_actual = df_actual.groupby('Holder')['Abonos'].sum().reset_index()
+    totales_actual.rename(columns={'Abonos': 'Abonos_Actuales_Mes'}, inplace=True)
 
-    dias_transcurridos = df_mayo['Date'].dt.day.max()
+    dias_transcurridos = df_actual['Date'].dt.day.max()
     if pd.isna(dias_transcurridos): dias_transcurridos = 1
     dias_restantes = 31 - dias_transcurridos
 
@@ -84,18 +89,18 @@ def procesar_datos():
     totales_por_metodo = df.groupby('Holder')[['Wuzi', 'BP', 'SPEI']].sum().reset_index()
 
     lista_maestra = pd.DataFrame({'Holder': df['Holder'].unique()})
-    proyeccion = pd.merge(lista_maestra, totales_mayo, on='Holder', how='left').fillna(0)
+    proyeccion = pd.merge(lista_maestra, totales_actual, on='Holder', how='left').fillna(0)
     proyeccion = pd.merge(proyeccion, promedio_mensual, on='Holder', how='left').fillna(0)
     proyeccion = pd.merge(proyeccion, totales_por_metodo, on='Holder', how='left').fillna(0)
 
-    proyeccion['Promedio_Diario'] = proyeccion['Abonos_Actuales_Mayo'] / dias_transcurridos
-    proyeccion['Proyeccion_Cierre_Mayo'] = proyeccion['Abonos_Actuales_Mayo'] + (proyeccion['Promedio_Diario'] * dias_restantes)
-    proyeccion['Diferencia_vs_Promedio'] = proyeccion['Proyeccion_Cierre_Mayo'] - proyeccion['Promedio_Mensual_Historico']
+    proyeccion['Promedio_Diario'] = proyeccion['Abonos_Actuales_Mes'] / dias_transcurridos
+    proyeccion['Proyeccion_Cierre_Mes'] = proyeccion['Abonos_Actuales_Mes'] + (proyeccion['Promedio_Diario'] * dias_restantes)
+    proyeccion['Diferencia_vs_Promedio'] = proyeccion['Proyeccion_Cierre_Mes'] - proyeccion['Promedio_Mensual_Historico']
 
     def estatus_meta(row):
         if row['Promedio_Mensual_Historico'] == 0: return 'Nuevo Cliente (Sin historial previo)'
-        elif row['Abonos_Actuales_Mayo'] == 0: return '🚨 Inactivo en Mayo (Riesgo de abandono)'
-        elif row['Proyeccion_Cierre_Mayo'] >= row['Promedio_Mensual_Historico']: return '✅ Llegará a la meta (Supera su promedio)'
+        elif row['Abonos_Actuales_Mes'] == 0: return '🚨 Inactivo en el mes actual (Riesgo de abandono)'
+        elif row['Proyeccion_Cierre_Mes'] >= row['Promedio_Mensual_Historico']: return '✅ Llegará a la meta (Supera su promedio)'
         else: return '⚠️ Peligro (Por debajo de su promedio)'
 
     proyeccion['Diagnostico'] = proyeccion.apply(estatus_meta, axis=1)

@@ -561,7 +561,7 @@
                 const rawName = (r.Holder || '').trim();
                 const norm = normalizeHolder(rawName);
                 const canonicalName = normalizedToCanonical.get(norm) || rawName;
-                return { holder: canonicalName, norm, val: parseNum(r.Abonos_Actuales_Mayo) };
+                return { holder: canonicalName, norm, val: parseNum(r.Abonos_Actuales_Mes) };
             })
             .filter(r => r.holder && r.val > 0 && activeNormalizedSet.has(r.norm))
             .sort((a, b) => b.val - a.val)
@@ -727,7 +727,7 @@
         html += `<th data-sort="ranking" class="${getClass('ranking')} sort-num">Ranking <span class="sort-icon">${getIcon('ranking')}</span></th>`;
         html += `<th data-sort="director" class="${getClass('director')}">Director <span class="sort-icon">${getIcon('director')}</span></th>`;
         html += `<th data-sort="vendedor" class="${getClass('vendedor')}">Vendedor <span class="sort-icon">${getIcon('vendedor')}</span></th>`;
-        html += `<th data-sort="abonos" class="${getClass('abonos')} sort-num">Abonos Mayo <span class="sort-icon">${getIcon('abonos')}</span></th>`;
+        html += `<th data-sort="abonos" class="${getClass('abonos')} sort-num">Abonos Mes Actual <span class="sort-icon">${getIcon('abonos')}</span></th>`;
         html += `<th data-sort="promedio" class="${getClass('promedio')} sort-num">Promedio Histórico <span class="sort-icon">${getIcon('promedio')}</span></th>`;
         html += `<th data-sort="proyeccion" class="${getClass('proyeccion')} sort-num">Proyección Cierre <span class="sort-icon">${getIcon('proyeccion')}</span></th>`;
         html += `<th data-sort="diagnostico" class="${getClass('diagnostico')}">Diagnóstico <span class="sort-icon">${getIcon('diagnostico')}</span></th>`;
@@ -796,9 +796,9 @@
                 ranking: rPos,
                 director: rrow ? (rrow.Director || '').trim() : '',
                 vendedor: rrow ? (rrow.Vendedor || '').trim() : '',
-                abonos: prow ? parseNum(prow.Abonos_Actuales_Mayo) : 0,
+                abonos: prow ? parseNum(prow.Abonos_Actuales_Mes) : 0,
                 promedio: prow ? parseNum(prow.Promedio_Mensual_Historico) : 0,
-                proyeccion: prow ? parseNum(prow.Proyeccion_Cierre_Mayo) : 0,
+                proyeccion: prow ? parseNum(prow.Proyeccion_Cierre_Mes) : 0,
                 variacion: varMes,
                 tendencia: trow ? (trow.Tendencia_Mes || '').trim() : '',
                 diagnostico: prow ? (prow.Diagnostico || '').trim() : '',
@@ -1123,9 +1123,9 @@
         `;
 
         // KPIs
-        $('#det-abonos').textContent = prow ? fmtCurrency(parseNum(prow.Abonos_Actuales_Mayo)) : '—';
+        $('#det-abonos').textContent = prow ? fmtCurrency(parseNum(prow.Abonos_Actuales_Mes)) : '—';
         $('#det-promedio').textContent = prow ? fmtCurrency(parseNum(prow.Promedio_Mensual_Historico)) : '—';
-        $('#det-proyeccion').textContent = prow ? fmtCurrency(parseNum(prow.Proyeccion_Cierre_Mayo)) : '—';
+        $('#det-proyeccion').textContent = prow ? fmtCurrency(parseNum(prow.Proyeccion_Cierre_Mes)) : '—';
 
         // Métodos de pago semanal comparativo (Wuzi, BP, SPEI)
         const wuziRow = getRow('wuziSemanal', holder);
@@ -1148,7 +1148,7 @@
         const diagEl = $('#det-diagnostico');
         if (prow && prow.Diagnostico) {
             const promedio = parseNum(prow.Promedio_Mensual_Historico);
-            const proyeccion = parseNum(prow.Proyeccion_Cierre_Mayo);
+            const proyeccion = parseNum(prow.Proyeccion_Cierre_Mes);
             diagEl.innerHTML = diagnosticoBadge(prow.Diagnostico, promedio, proyeccion);
         } else {
             diagEl.textContent = '—';
@@ -1851,7 +1851,7 @@
 
             txt += `*${idx + 1}. ${r.holder}* (Rank: ${rankText})\n`;
             txt += `• Dir: ${r.director || '—'} | Vend: ${r.vendedor || '—'}\n`;
-            txt += `• Abonos Mayo: ${fmtCurrency(r.abonos)} | Prom. Hist: ${fmtCurrency(r.promedio)} | Proy. Cierre: ${fmtCurrency(r.proyeccion)}\n`;
+            txt += `  Abonos Mes Actual: ${fmtCurrency(r.abonos)} | Prom. Hist: ${fmtCurrency(r.promedio)} | Proy. Cierre: ${fmtCurrency(r.proyeccion)}\n`;
             txt += `• Salud: ${r.salud || '—'} | Diagnóstico: *${fullDiag}* | Contracargos: *${r.contracargos || 0}*\n`;
             txt += `---------------------------------------------\n`;
         });
