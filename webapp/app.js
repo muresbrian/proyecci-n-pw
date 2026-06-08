@@ -114,11 +114,11 @@
             }
         });
         list.sort((a, b) => {
-            const mA = a.weekStr.match(/Semana (\d+) (\d{4})/);
-            const mB = b.weekStr.match(/Semana (\d+) (\d{4})/);
+            const mA = a.weekStr.match(/Semana (\d+)(?:\s+(\d{4}))?/);
+            const mB = b.weekStr.match(/Semana (\d+)(?:\s+(\d{4}))?/);
             if (mA && mB) {
-                const wA = parseInt(mA[1]), yA = parseInt(mA[2]);
-                const wB = parseInt(mB[1]), yB = parseInt(mB[2]);
+                const wA = parseInt(mA[1]), yA = mA[2] ? parseInt(mA[2]) : 2025;
+                const wB = parseInt(mB[1]), yB = mB[2] ? parseInt(mB[2]) : 2025;
                 if (yA !== yB) return yA - yB;
                 return wA - wB;
             }
@@ -135,11 +135,11 @@
         const weekHeaders = Object.keys(row0).filter(k => k.startsWith('Semana '));
 
         const parsedWeeks = weekHeaders.map(h => {
-            const m = h.match(/Semana (\d+) (\d{4})/);
+            const m = h.match(/Semana (\d+)(?:\s+(\d{4}))?/);
             return {
                 original: h,
                 week: m ? parseInt(m[1]) : 0,
-                year: m ? parseInt(m[2]) : 0
+                year: m ? (m[2] ? parseInt(m[2]) : 2025) : 0
             };
         });
 
@@ -152,10 +152,10 @@
     }
 
     function formatWeekHeader(weekStr) {
-        const m = weekStr.match(/Semana (\d+) (\d{4})/);
+        const m = weekStr.match(/Semana (\d+)(?:\s+(\d{4}))?/);
         if (m) {
             const week = m[1];
-            const year = m[2].slice(-2);
+            const year = (m[2] || '2025').slice(-2);
             return `S${week} '${year}`;
         }
         return weekStr;
@@ -1262,9 +1262,9 @@
             const monthNum = monthMap[monthName];
             if (!monthNum) return;
 
-            const yearMatch = col.match(/\d{4}$/);
+            const yearMatch = col.match(/Semana \d+(?:\s+(\d{4}))?/);
             if (!yearMatch) return;
-            const year = parseInt(yearMatch[0]);
+            const year = yearMatch[1] ? parseInt(yearMatch[1]) : 2025;
 
             const key = `${year}-${String(monthNum).padStart(2, '0')}`;
             const val = parseNum(row[col]);
@@ -1446,10 +1446,10 @@
 
         Object.keys(row).forEach(col => {
             if (col === 'Director' || col === 'Holder') return;
-            const match = col.match(/Semana (\d+) (\d{4})/);
+            const match = col.match(/Semana (\d+)(?:\s+(\d{4}))?/);
             if (!match) return;
             const weekNum = parseInt(match[1]);
-            const year = parseInt(match[2]);
+            const year = match[2] ? parseInt(match[2]) : 2025;
 
             const val = parseNum(row[col]);
             if (year === 2025 && weekNum >= 1 && weekNum <= 53) {
