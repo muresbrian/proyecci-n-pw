@@ -13,7 +13,10 @@
         abonosMensuales:'Abonos_Mensuales.csv',
         efectoNomina:   'Efecto_Nomina.csv',
         patronesDia:    'Patrones_Dia_Semana.csv',
-        variacionDiaria:'Variacion_Diaria.csv',
+        varDia:         'Variacion_Diaria.csv',
+        wuziDia:        'Wuzi_Diario.csv',
+        bpDia:          'BP_Diario.csv',
+        speiDia:        'SPEI_Diario.csv',
         abonosDiarios:  'Abonos_Diarios.csv',
         patronesQuincena:'Patrones_Quincena.csv',
         abonosSemanales:'Abonos_Semanales.csv',
@@ -1073,6 +1076,7 @@
     // ══════════════════════════════
     function openDetail(holder) {
         currentDetailHolder = holder;
+        
         const detailTab = $('#detail-tab');
         detailTab.style.display = '';
         $('#detail-tab-label').textContent = holder.length > 22 ? holder.slice(0, 20) + '…' : holder;
@@ -1227,6 +1231,7 @@
         renderDetailDiaSemana(pdrow);
         renderDetailQuincena(pqrow);
         renderDetailSemanal(trxSemRow);
+        renderDetailMarcasDiario(holder);
     }
 
     function renderDetailMensual(row) {
@@ -1613,6 +1618,94 @@
                 },
                 interaction: { intersect: false, mode: 'index' },
             },
+        });
+    }
+
+    function renderDetailMarcasDiario(holder) {
+        const ctx = $('#detail-chart-marcas').getContext('2d');
+        if (charts.detMarcas) charts.detMarcas.destroy();
+
+        const wuziRow = getRow('wuziDia', holder);
+        const bpRow = getRow('bpDia', holder);
+        const speiRow = getRow('speiDia', holder);
+
+        if (!wuziRow && !bpRow && !speiRow) {
+            charts.detMarcas = emptyChart(ctx, 'Sin datos diarios de marcas');
+            return;
+        }
+
+        // Use Wuzi's row to find all available dates
+        const dateCols = Object.keys(wuziRow || bpRow || speiRow).filter(k => k.match(/^\d{4}-\d{2}-\d{2}$/)).sort();
+
+        if (dateCols.length === 0) {
+            charts.detMarcas = emptyChart(ctx, 'Sin datos diarios de marcas');
+            return;
+        }
+
+        // Format labels nicely
+        const labels = dateCols.map(d => {
+            const dateObj = new Date(d + 'T12:00:00');
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            const mo = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][dateObj.getMonth()];
+            return `${day} ${mo}`;
+        });
+
+        const dataWuzi = dateCols.map(d => wuziRow ? parseNum(wuziRow[d]) : null);
+        const dataBp = dateCols.map(d => bpRow ? parseNum(bpRow[d]) : null);
+        const dataSpei = dateCols.map(d => speiRow ? parseNum(speiRow[d]) : null);
+
+        charts.detMarcas = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [
+                    {
+                        label: 'Wuzi',
+                        data: dataWuzi,
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                        fill: false,
+                        tension: 0.35,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#00d4ff'
+                    },
+                    {
+                        label: 'BP',
+                        data: dataBp,
+                        borderColor: '#ff00d4',
+                        backgroundColor: 'rgba(255, 0, 212, 0.1)',
+                        fill: false,
+                        tension: 0.35,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#ff00d4'
+                    },
+                    {
+                        label: 'SPEI',
+                        data: dataSpei,
+                        borderColor: '#d4ff00',
+                        backgroundColor: 'rgba(212, 255, 0, 0.1)',
+                        fill: false,
+                        tension: 0.35,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#d4ff00'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: { color: '#8a94a8' }
+                    },
+                    tooltip: tooltipOpts({
+                        label: ctx => `${ctx.dataset.label}: ${fmtCurrency(ctx.parsed.y)}`
+                    })
+                },
+                scales: scaleOpts(),
+                interaction: { intersect: false, mode: 'index' },
+            }
         });
     }
 
