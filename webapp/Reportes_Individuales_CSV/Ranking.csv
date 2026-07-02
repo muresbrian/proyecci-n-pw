@@ -1,7 +1,7 @@
 ﻿Holder,Ranking,Vendedor,Director
-RAP,497,AARA,Daniel Valero
-REV,1302,AARA,Daniel Valero
-LUCAS RICO GAZCA,1525,AARA,Daniel Valero
+RAP,497,Daniel Valero,Daniel Valero
+REV,1302,Daniel Valero,Daniel Valero
+LUCAS RICO GAZCA,1525,Daniel Valero,Daniel Valero
 JUANA MEZCALA,119,Adam Dorenbaum,Adam Dorenbaum
 EVO SF,273,Adam Dorenbaum,Adam Dorenbaum
 POKE SEA,306,Adam Dorenbaum,Adam Dorenbaum
@@ -242,7 +242,7 @@ MAURICIO ZEBADUA,895,Alejandro Melendez,Alejandro Melendez
 ABRAHAM HUSNI,923,Alejandro Melendez,Alejandro Melendez
 MOROCHA,1180,Alejandro Melendez,Alejandro Melendez
 VALENTINA OLIVETTO,1239,Alejandro Melendez,Alejandro Melendez
-Mauricio Doporto,538,Alex Bracho,Manuel Cortés
+Mauricio Doporto,538,Manuel Cortés,Manuel Cortés
 BEBEVENT CC ANGELÓPOLIS,781,Alexandra Vazquez,PayWise
 BEBEVENT,827,Alexandra Vazquez,PayWise
 BEBEVENT VALQUIRICO 2,995,Alexandra Vazquez,PayWise
@@ -560,10 +560,10 @@ NEUMOLOGIA,1562,Arturo Liogón,Arturo Liogón
 CASAMARTE,1571,Arturo Liogón,Arturo Liogón
 CERVECERIA LA MEXICO,1572,Arturo Liogón,Arturo Liogón
 DEPORTES ENSENADA,1578,Arturo Liogón,Arturo Liogón
-TACO FACTORY GRAND OUTLET,631,Astrid Nava,Iñaki Otegui
-RAINFALL BUSINESS,659,Astrid Nava,Iñaki Otegui
-ZAIDA MORENO,1116,Astrid Nava,Iñaki Otegui
-TOP SMILE CANCUN,1481,Astrid Nava,Iñaki Otegui
+TACO FACTORY GRAND OUTLET,631,Iñaki Otegui,Iñaki Otegui
+RAINFALL BUSINESS,659,Iñaki Otegui,Iñaki Otegui
+ZAIDA MORENO,1116,Iñaki Otegui,Iñaki Otegui
+TOP SMILE CANCUN,1481,Iñaki Otegui,Iñaki Otegui
 ANTOJITOS MOONS,1303,Brian Mures,PayWise
 EL CARRITO ROJO,1483,Brian Mures,PayWise
 LAS QKAS 2,855,Carlos Torres,PayWise
@@ -625,12 +625,12 @@ BRENCH PARK S.A DE C.V,1056,Ds Soluciones,Ds Soluciones
 CUEVAS,1278,Ds Soluciones,Ds Soluciones
 LROC,1449,Ds Soluciones,Ds Soluciones
 MANUPW,1535,Ds Soluciones,Ds Soluciones
-PEDI Y MANY,722,Eduardo Castillo,Iñaki Otegui
-FUNDACION CRECIENDO,775,Eduardo Castillo,Iñaki Otegui
-GABRIELA GUTIERREZ,293,Eduardo Orozco,Phil Caire
-GLOW SUPPLEMENTS,752,Eduardo Orozco,Phil Caire
-DRA. CLAUDIA VALTIERRA,905,Eduardo Orozco,Phil Caire
-SILA PILATES AND WELLNESS,1370,Eduardo Orozco,Phil Caire
+PEDI Y MANY,722,Iñaki Otegui,Iñaki Otegui
+FUNDACION CRECIENDO,775,Iñaki Otegui,Iñaki Otegui
+GABRIELA GUTIERREZ,293,Phil Caire,Phil Caire
+GLOW SUPPLEMENTS,752,Phil Caire,Phil Caire
+DRA. CLAUDIA VALTIERRA,905,Phil Caire,Phil Caire
+SILA PILATES AND WELLNESS,1370,Phil Caire,Phil Caire
 TRANSPORTES GYM INTERNATIONAL,92,Santiago García,Santiago García
 BARKAZA PITIC,126,Santiago García,Santiago García
 LOGISTICA INTEGRADA,139,Santiago García,Santiago García
@@ -683,12 +683,12 @@ ABASEL,1542,Santiago García,Santiago García
 BLKSPD,1560,Santiago García,Santiago García
 HMG,1580,Santiago García,Santiago García
 MOTOR & TIRE,1581,Santiago García,Santiago García
-GELISH TIME,1158,Enrique Abedrop,Phil Caire
+GELISH TIME,1158,Phil Caire,Phil Caire
 TRYPHE,1418,Erik Gomora,PayWise
 MARICELA RECENDEZ LOPEZ,1460,Erik Gomora,PayWise
 HOTEL BOUTIQUE PARADOR SAN MIGUEL,697,Fernando Velasco,PayWise
 ABELARDO RODRIGUEZ BURGOS,1487,Fernando Velasco,PayWise
-CASA FRUTAS Y VERDURAS,476,FRANCISCO AZPIRI,Santiago García
+CASA FRUTAS Y VERDURAS,476,Santiago García,Santiago García
 JUAN PABLO VIVANCO,1350,Francisco Itto,PayWise
 SKIN PROJECT,296,Diego Guerrero,Diego Guerrero
 P MAMI,102,Grupo Chihuahua,Iñaki Otegui
@@ -719,7 +719,7 @@ ELIA WELLNES,1170,Grupo Chihuahua,Iñaki Otegui
 FIX,1377,Grupo Chihuahua,Iñaki Otegui
 GEA DENTAL,1422,Grupo Chihuahua,Iñaki Otegui
 GRUPO IMPORTADOR DE COMBUSTIBLES,1461,Grupo Chihuahua,Iñaki Otegui
-ACQ MERIDA,1311,Grupo Mérida,Iñaki Otegui
+ACQ MERIDA,1311,Iñaki Otegui,Iñaki Otegui
 FARMACIA GENERICO Y PATENTE,1486,Harumi Betanzos,PayWise
 J BURCIAGA,335,Santiago García,Adam Dorenbaum
 CAFETERIA UABC SAUZAL,384,Santiago García,Adam Dorenbaum
@@ -1116,11 +1116,11 @@ YALKU,234,Juan Carlos García,Adrian Melendez
 DATAVORTEK SA DE CV,238,Juan Carlos Gonzalez,PayWise
 BRUNO BERRUTI,564,Juan Carlos Gurumeta,Phil Caire
 Cuando calienta el sol,220,Juan Carlos Hernandez,Adrian Melendez
-ARTURO VALENCIA,907,Lepons,Santiago García
-MIPLAN.MX,988,Lepons,Santiago García
-LA BUENA FE,69,Ludo Linder,Javier Linder
-NAIL ATTELIER,478,Ludo Linder,Javier Linder
-MINA,754,Ludo Linder,Javier Linder
+ARTURO VALENCIA,907,Santiago García,Santiago García
+MIPLAN.MX,988,Santiago García,Santiago García
+LA BUENA FE,69,Javier Linder,Javier Linder
+NAIL ATTELIER,478,Javier Linder,Javier Linder
+MINA,754,Javier Linder,Javier Linder
 THE FAMOUS PIZZA & BEER,1499,Luis Frausto,Alejandro Aguilera
 SANTA FORTUNA BAKERY & CAFÉ,1499,Luis Frausto,Alejandro Aguilera
 Oaxaca Café,205,Luis Salva Tierra,Alejandro Melendez
@@ -1158,15 +1158,15 @@ SERVICIOS TURISTICOS,1288,Mónica Segovia,Arturo Liogón
 TIKITOTS,1385,Mónica Segovia,Arturo Liogón
 LYFT BY KARLA,1551,Mónica Segovia,Arturo Liogón
 LUXURY BAGS,1568,Mónica Segovia,Arturo Liogón
-NUTRIOLOGA LORENA,581,Nalleli Urcid,Iñaki Otegui
-PROLO VALLARTA,778,Nalleli Urcid,Iñaki Otegui
-FLAUTASTICAS,1029,Nalleli Urcid,Iñaki Otegui
-DR AKE NAZUL,1144,Nalleli Urcid,Iñaki Otegui
+NUTRIOLOGA LORENA,581,Iñaki Otegui,Iñaki Otegui
+PROLO VALLARTA,778,Iñaki Otegui,Iñaki Otegui
+FLAUTASTICAS,1029,Iñaki Otegui,Iñaki Otegui
+DR AKE NAZUL,1144,Iñaki Otegui,Iñaki Otegui
 CARLOS SANTOS GARZA,457,Alejandro Melendez,Alejandro Melendez
 YACHTVIBES,513,Alejandro Melendez,Alejandro Melendez
 PARRILLA POLANCO,926,Alejandro Melendez,Alejandro Melendez
 SAN TROPICO,1021,Alejandro Melendez,Alejandro Melendez
-ANGEL REYES NAVARRO,246,Navegante,Diego Guerrero
+ANGEL REYES NAVARRO,246,Diego Guerrero,Diego Guerrero
 "PEGASUS RS, SA DE CV",135,Nicole Bauzá,Nicole Bauzá
 FRANKEL SA DE CV,226,Nicole Bauzá,Nicole Bauzá
 CASA IXUM,536,Nicole Bauzá,Nicole Bauzá
@@ -1205,58 +1205,58 @@ ONCE AND FOREVER,768,Ninel Chavarría,Iñaki Otegui
 Traumatologia Q.Roo,1051,Ninel Chavarría,Iñaki Otegui
 Consultor Holistico,1409,Ninel Chavarría,Iñaki Otegui
 SUSHI ITTO,359,Ninel Chavarría,Iñaki Otegui
-DOS CEIBAS,434,Octavio Dominguez,Diego Guerrero
-HOTEL KAN WELLNESS,477,Octavio Dominguez,Diego Guerrero
-LOBITO,884,Octavio Dominguez,Diego Guerrero
-KUXTAL RESTAURANTE,976,Octavio Dominguez,Diego Guerrero
-CEFI,1041,Octavio Dominguez,Diego Guerrero
-PAPI PALAZUELOS,1118,Octavio Dominguez,Diego Guerrero
-MI VIDA TULUM,1126,Octavio Dominguez,Diego Guerrero
-FREE SPIRIT,1247,Octavio Dominguez,Diego Guerrero
+DOS CEIBAS,434,Diego Guerrero,Diego Guerrero
+HOTEL KAN WELLNESS,477,Diego Guerrero,Diego Guerrero
+LOBITO,884,Diego Guerrero,Diego Guerrero
+KUXTAL RESTAURANTE,976,Diego Guerrero,Diego Guerrero
+CEFI,1041,Diego Guerrero,Diego Guerrero
+PAPI PALAZUELOS,1118,Diego Guerrero,Diego Guerrero
+MI VIDA TULUM,1126,Diego Guerrero,Diego Guerrero
+FREE SPIRIT,1247,Diego Guerrero,Diego Guerrero
 LOS COCTELES DE VIRREYES SANTA FE,89,Omar Cravioto,Omar Cravioto
 VHU,117,Omar Cravioto,Omar Cravioto
 CHILTEPIN,41,Phil Caire,Phil Caire
 GRUPO CAURI,174,Phil Caire,Phil Caire
 LA JUNGLA BUFFET,518,Phil Caire,Phil Caire
-HOTELERIA Y ALIMENTOS,328,Paul Careaga,Arturo Liogón
-TACOS LF,393,Paul Careaga,Arturo Liogón
-FASHION TREATS,435,Paul Careaga,Arturo Liogón
-MZR SALUDABLE,441,Paul Careaga,Arturo Liogón
-TELECOMUNICACION LM,447,Paul Careaga,Arturo Liogón
-PIZZAS PASEO,605,Paul Careaga,Arturo Liogón
-SALON P,629,Paul Careaga,Arturo Liogón
-PDS,647,Paul Careaga,Arturo Liogón
-DRINK SOCIAL GARDEN,686,Paul Careaga,Arturo Liogón
-DESAYUNOS PB,755,Paul Careaga,Arturo Liogón
-TRANSIT,767,Paul Careaga,Arturo Liogón
-SERVICIOS VETERINARIOS PP,789,Paul Careaga,Arturo Liogón
-OPTICA PLM,854,Paul Careaga,Arturo Liogón
-OPTICA ROCHA,947,Paul Careaga,Arturo Liogón
-IMAGIA,1060,Paul Careaga,Arturo Liogón
-COMIDA CASERA NUTRIRICO,1065,Paul Careaga,Arturo Liogón
-NIPON LEYVA,1075,Paul Careaga,Arturo Liogón
-PANADERIA ARTESANAL LC,1078,Paul Careaga,Arturo Liogón
-SILENT CONSULTING,1082,Paul Careaga,Arturo Liogón
-AUTOLAVADO PROFESIONAL,1087,Paul Careaga,Arturo Liogón
-STEAKHOUSE CLN,1098,Paul Careaga,Arturo Liogón
-SNACK BOX,1109,Paul Careaga,Arturo Liogón
-DEPORTES PRO,1184,Paul Careaga,Arturo Liogón
-SHEM BOX ARROCHITOS,1202,Paul Careaga,Arturo Liogón
-DISTRIBUIDORA QUINTANA,1254,Paul Careaga,Arturo Liogón
-MILO PETITE,1262,Paul Careaga,Arturo Liogón
-MAC DOC,1330,Paul Careaga,Arturo Liogón
-MEDICA CEL,1358,Paul Careaga,Arturo Liogón
-WAKE UP,1378,Paul Careaga,Arturo Liogón
-SEGUROS GESTORIA LM,1381,Paul Careaga,Arturo Liogón
-JASON 21,1394,Paul Careaga,Arturo Liogón
-B SUSHI,1443,Paul Careaga,Arturo Liogón
-SHA SPA,1454,Paul Careaga,Arturo Liogón
-JR CLAMATOS,1500,Paul Careaga,Arturo Liogón
-RESTAURANTE AR,1507,Paul Careaga,Arturo Liogón
-FINANCIERA FORECTAST,1544,Paul Careaga,Arturo Liogón
-MASARYK,108,Javier Linder,Javier Linder
-PXG,233,Javier Linder,Javier Linder
-TAQUITOS MI AMOR,980,Javier Linder,Javier Linder
+HOTELERIA Y ALIMENTOS,328,Arturo Liogón,Arturo Liogón
+TACOS LF,393,Arturo Liogón,Arturo Liogón
+FASHION TREATS,435,Arturo Liogón,Arturo Liogón
+MZR SALUDABLE,441,Arturo Liogón,Arturo Liogón
+TELECOMUNICACION LM,447,Arturo Liogón,Arturo Liogón
+PIZZAS PASEO,605,Arturo Liogón,Arturo Liogón
+SALON P,629,Arturo Liogón,Arturo Liogón
+PDS,647,Arturo Liogón,Arturo Liogón
+DRINK SOCIAL GARDEN,686,Arturo Liogón,Arturo Liogón
+DESAYUNOS PB,755,Arturo Liogón,Arturo Liogón
+TRANSIT,767,Arturo Liogón,Arturo Liogón
+SERVICIOS VETERINARIOS PP,789,Arturo Liogón,Arturo Liogón
+OPTICA PLM,854,Arturo Liogón,Arturo Liogón
+OPTICA ROCHA,947,Arturo Liogón,Arturo Liogón
+IMAGIA,1060,Arturo Liogón,Arturo Liogón
+COMIDA CASERA NUTRIRICO,1065,Arturo Liogón,Arturo Liogón
+NIPON LEYVA,1075,Arturo Liogón,Arturo Liogón
+PANADERIA ARTESANAL LC,1078,Arturo Liogón,Arturo Liogón
+SILENT CONSULTING,1082,Arturo Liogón,Arturo Liogón
+AUTOLAVADO PROFESIONAL,1087,Arturo Liogón,Arturo Liogón
+STEAKHOUSE CLN,1098,Arturo Liogón,Arturo Liogón
+SNACK BOX,1109,Arturo Liogón,Arturo Liogón
+DEPORTES PRO,1184,Arturo Liogón,Arturo Liogón
+SHEM BOX ARROCHITOS,1202,Arturo Liogón,Arturo Liogón
+DISTRIBUIDORA QUINTANA,1254,Arturo Liogón,Arturo Liogón
+MILO PETITE,1262,Arturo Liogón,Arturo Liogón
+MAC DOC,1330,Arturo Liogón,Arturo Liogón
+MEDICA CEL,1358,Arturo Liogón,Arturo Liogón
+WAKE UP,1378,Arturo Liogón,Arturo Liogón
+SEGUROS GESTORIA LM,1381,Arturo Liogón,Arturo Liogón
+JASON 21,1394,Arturo Liogón,Arturo Liogón
+B SUSHI,1443,Arturo Liogón,Arturo Liogón
+SHA SPA,1454,Arturo Liogón,Arturo Liogón
+JR CLAMATOS,1500,Arturo Liogón,Arturo Liogón
+RESTAURANTE AR,1507,Arturo Liogón,Arturo Liogón
+FINANCIERA FORECTAST,1544,Arturo Liogón,Arturo Liogón
+MASARYK,108,Javier Lindner,Javier Linder
+PXG,233,Javier Lindner,Javier Linder
+TAQUITOS MI AMOR,980,Javier Lindner,Javier Linder
 PayWise - Comerciales,5,PayWise,PayWise
 Referenciadores,10,PayWise,PayWise
 Conciliación Unfortunate,22,PayWise,PayWise
