@@ -21,7 +21,24 @@ if %ERRORLEVEL% neq 0 (
 echo Verificando librerias necesarias...
 pip install pandas openpyxl >nul 2>&1
 
-:: 3. Validar que los archivos existan
+:: 3. Buscar el ejecutable de git
+set "GIT_CMD=git"
+where git >nul 2>nul
+if %ERRORLEVEL% neq 0 (
+    if exist "%LOCALAPPDATA%\Programs\Git\cmd\git.exe" set "GIT_CMD=%LOCALAPPDATA%\Programs\Git\cmd\git.exe"
+    if exist "%LOCALAPPDATA%\Programs\Git\bin\git.exe" set "GIT_CMD=%LOCALAPPDATA%\Programs\Git\bin\git.exe"
+    if exist "C:\Program Files\Git\cmd\git.exe" set "GIT_CMD=C:\Program Files\Git\cmd\git.exe"
+    if exist "C:\Program Files\Git\bin\git.exe" set "GIT_CMD=C:\Program Files\Git\bin\git.exe"
+)
+
+:: 4. Sincronizar repositorio con GitHub antes del analisis (evita conflictos)
+"%GIT_CMD%" --version >nul 2>&1
+if %ERRORLEVEL% equ 0 (
+    echo Sincronizando con los ultimos cambios de GitHub...
+    "%GIT_CMD%" pull origin main --rebase -X theirs >nul 2>&1
+)
+
+:: 5. Validar que los archivos existan
 if not exist "analizar_tendencias.py" (
     color 0E
     echo [ADVERTENCIA] No se encontro el archivo 'analizar_tendencias.py'.
@@ -44,18 +61,7 @@ echo Ejecutando el modelo de analisis...
 echo.
 python analizar_tendencias.py
 set "ANALYSIS_ERROR=%ERRORLEVEL%"
-
-:: Buscar el ejecutable de git fuera de bloques complejos para evitar errores de expansion de variables
-set "GIT_CMD=git"
-where git >nul 2>nul
-if %ERRORLEVEL% neq 0 (
-    if exist "%LOCALAPPDATA%\Programs\Git\cmd\git.exe" set "GIT_CMD=%LOCALAPPDATA%\Programs\Git\cmd\git.exe"
-    if exist "%LOCALAPPDATA%\Programs\Git\bin\git.exe" set "GIT_CMD=%LOCALAPPDATA%\Programs\Git\bin\git.exe"
-    if exist "C:\Program Files\Git\cmd\git.exe" set "GIT_CMD=C:\Program Files\Git\cmd\git.exe"
-    if exist "C:\Program Files\Git\bin\git.exe" set "GIT_CMD=C:\Program Files\Git\bin\git.exe"
-)
-
-:: 5. Validar resultado
+:: 6. Validar resultado
 if %ANALYSIS_ERROR% equ 0 (
     echo.
     echo ========================================================
@@ -87,10 +93,19 @@ if %ANALYSIS_ERROR% equ 0 (
     echo.
     echo Sincronizando reportes con tu repositorio de GitHub...
     
-    "%GIT_CMD%" add webapp/Reportes_Individuales_CSV/*.csv
-    "%GIT_CMD%" commit -m "Actualizacion automatica de reportes" >nul 2>&1
-    "%GIT_CMD%" push origin main
-    echo Sincronizacion completada con exito.
+    "%GIT_CMD%" --version >nul 2>&1
+    if %ERRORLEVEL% equ 0 (
+        "%GIT_CMD%" add webapp/Reportes_Individuales_CSV/*.csv
+        "%GIT_CMD%" commit -m "Actualizacion automatica de reportes" >nul 2>&1
+        
+        :: Traer posibles cambios y aplicar rebase (nuestros CSVs recien generados tienen prioridad si hay conflicto)
+        "%GIT_CMD%" pull origin main --rebase -X theirs >nul 2>&1
+        
+        "%GIT_CMD%" push origin main
+        echo Sincronizacion completada con exito.
+    ) else (
+        echo [INFO] Git no esta disponible, saltando sincronizacion web.
+    )
 ) else (
     color 0C
     echo.
