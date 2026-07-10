@@ -64,6 +64,21 @@ if %ANALYSIS_ERROR% equ 0 (
     echo ========================================================
     
     echo.
+    echo Generando reporte de clientes perdidos...
+    echo.
+    python generar_reporte_perdidos.py
+    
+    echo.
+    echo Generando reporte de Health Score de la cartera 2026...
+    echo.
+    python generar_reporte_salud_2026.py
+    
+    echo.
+    echo Generando reporte de Health Score Avanzado de la cartera 2026...
+    echo.
+    python generar_reporte_salud_avanzado.py
+    
+    echo.
     echo Separando las hojas del archivo Excel en archivos CSV...
     echo.
     python separar_hojas_csv.py

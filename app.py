@@ -45,7 +45,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 @st.cache_data
-def get_raw_data_v2(force_reload=True): # Invalidate cache
+def get_raw_data_v2(file_mtime): 
     file_path = 'TRX WU_BP.xlsx'
     if not os.path.exists(file_path):
         return None, None
@@ -54,8 +54,11 @@ def get_raw_data_v2(force_reload=True): # Invalidate cache
 
 st.title("🚨 Dashboard de Alertas Inteligentes de Clientes")
 
+file_path = 'TRX WU_BP.xlsx'
+file_mtime = os.path.getmtime(file_path) if os.path.exists(file_path) else 0
+
 with st.spinner('Cargando datos crudos...'):
-    df_raw, top_300 = get_raw_data_v2(force_reload=True)
+    df_raw, top_300 = get_raw_data_v2(file_mtime)
 
 if df_raw is None:
     st.error("No se encontró el archivo 'TRX WU_BP.xlsx' en el directorio actual. Por favor, asegúrese de que el archivo esté presente.")

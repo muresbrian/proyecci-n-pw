@@ -103,11 +103,21 @@ def get_metrics_for_date(df_raw, top_300, target_date):
     try:
         import os
         ranking_path = os.path.join('webapp', 'Reportes_Individuales_CSV', 'Ranking.csv')
+        
         if os.path.exists(ranking_path):
             df_ranking = pd.read_csv(ranking_path, encoding='utf-8')
             if 'Holder' in df_ranking.columns and 'Director' in df_ranking.columns and 'Vendedor' in df_ranking.columns:
-                # Merge con res
-                res = pd.merge(res, df_ranking[['Holder', 'Director', 'Vendedor']], on='Holder', how='left')
+                # Normalizar columnas para el merge (mayúsculas y sin espacios a los lados)
+                res['_merge_key'] = res['Holder'].astype(str).str.strip().str.upper()
+                df_ranking['_merge_key'] = df_ranking['Holder'].astype(str).str.strip().str.upper()
+                
+                # Quitar duplicados en _merge_key en ranking para evitar cruces dobles
+                df_ranking_dedup = df_ranking[['_merge_key', 'Director', 'Vendedor']].drop_duplicates(subset=['_merge_key'])
+                
+                # Merge con res usando la clave normalizada
+                res = pd.merge(res, df_ranking_dedup, on='_merge_key', how='left')
+                res = res.drop(columns=['_merge_key'])
+                
                 res['Director'] = res['Director'].fillna('Sin Director')
                 res['Vendedor'] = res['Vendedor'].fillna('Sin Vendedor')
             else:

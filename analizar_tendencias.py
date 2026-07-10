@@ -144,7 +144,7 @@ def procesar_datos():
 
         
         # Identificar columnas cronológicas y ordenarlas
-        semanas_25 = [c for c in cols if str(c).startswith('Semana') and '2025' in str(c)]
+        semanas_25 = [c for c in cols if str(c).startswith('Semana') and '2026' not in str(c) and '2027' not in str(c)]
         semanas_26 = [c for c in cols if str(c).startswith('Semana') and '2026' in str(c)]
         
         def obtener_num_semana(col_nombre):
@@ -263,6 +263,20 @@ def procesar_datos():
         wuzi_sem.to_excel(writer, sheet_name='Wuzi_Semanal')
         bp_sem.to_excel(writer, sheet_name='BP_Semanal')
         spei_sem.to_excel(writer, sheet_name='SPEI_Semanal')
+        
+        # Guardar desglose diario de métodos de pago
+        # Aseguramos que la fecha es string en formato YYYY-MM-DD para columnas limpias
+        df['Date_str'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
+        # Filtramos posibles fechas nulas
+        df_diario_marcas = df[df['Date_str'].notna()]
+        
+        wuzi_dia = df_diario_marcas.groupby(['Holder', 'Date_str'])['Wuzi'].sum().unstack(fill_value=0)
+        bp_dia = df_diario_marcas.groupby(['Holder', 'Date_str'])['BP'].sum().unstack(fill_value=0)
+        spei_dia = df_diario_marcas.groupby(['Holder', 'Date_str'])['SPEI'].sum().unstack(fill_value=0)
+        
+        wuzi_dia.to_excel(writer, sheet_name='Wuzi_Diario')
+        bp_dia.to_excel(writer, sheet_name='BP_Diario')
+        spei_dia.to_excel(writer, sheet_name='SPEI_Diario')
 
 if __name__ == '__main__':
     procesar_datos()

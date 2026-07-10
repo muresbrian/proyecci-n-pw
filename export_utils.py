@@ -10,9 +10,9 @@ def create_excel_report(df_latest, df_full, df_kpis):
     
     with pd.ExcelWriter(output, engine='openpyxl') as writer:
         # Sheet 1: Alertas completas
-        cols_main = ['Holder', 'Es_Top_300', 'Abonos', 'Abonos_ayer', 'Promedio_7d', 
+        cols_main = ['Holder', 'Director', 'Vendedor', 'Es_Top_300', 'Abonos', 'Abonos_ayer', 'Promedio_7d', 
                      'Variacion_promedio_pct', 'Dias_sin_transaccionar', 
-                     'Tipo_alerta', 'Score', 'Nivel_riesgo']
+                     'Alerta', 'Score', 'Nivel_riesgo']
         
         available_cols = [c for c in cols_main if c in df_latest.columns]
         
@@ -33,7 +33,7 @@ def create_excel_report(df_latest, df_full, df_kpis):
         df_kpis.to_excel(writer, sheet_name='Resumen KPI', index=False)
         
         # Sheet 4: Histórico de score
-        cols_hist = ['Holder', 'Date', 'Score', 'Abonos', 'Tipo_alerta']
+        cols_hist = ['Holder', 'Director', 'Vendedor', 'Date', 'Score', 'Abonos', 'Alerta']
         available_hist_cols = [c for c in cols_hist if c in df_full.columns]
         df_historico = df_full[available_hist_cols]
         
