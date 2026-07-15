@@ -25,6 +25,12 @@ if not exist "Nube_Dashboard" (
     "%GIT_CMD%" clone https://github.com/muresbrian/dashboard-alertas-diarias.git Nube_Dashboard
 )
 
+:: 1. Sincronizar la carpeta de la nube ANTES de copiar nuevos archivos (asegura que este limpia)
+echo Sincronizando repositorio de la nube con GitHub...
+cd Nube_Dashboard
+"%GIT_CMD%" pull origin main
+cd ..
+
 echo Copiando archivos de codigo y datos...
 copy /Y "app.py" "Nube_Dashboard\app.py" >nul
 copy /Y "data_processing.py" "Nube_Dashboard\data_processing.py" >nul
@@ -34,12 +40,8 @@ copy /Y "TRX WU_BP.xlsx" "Nube_Dashboard\TRX WU_BP.xlsx" >nul
 if not exist "Nube_Dashboard\webapp\Reportes_Individuales_CSV" mkdir "Nube_Dashboard\webapp\Reportes_Individuales_CSV"
 copy /Y "webapp\Reportes_Individuales_CSV\Ranking.csv" "Nube_Dashboard\webapp\Reportes_Individuales_CSV\Ranking.csv" >nul
 
-echo Sincronizando con GitHub...
+echo Subiendo actualizaciones...
 cd Nube_Dashboard
-
-:: Traer posibles cambios remotos antes de añadir archivos locales
-"%GIT_CMD%" pull origin main --rebase -X theirs >nul 2>&1
-
 "%GIT_CMD%" add "app.py"
 "%GIT_CMD%" add "data_processing.py"
 "%GIT_CMD%" add "export_utils.py"
@@ -47,10 +49,6 @@ cd Nube_Dashboard
 "%GIT_CMD%" add -f "TRX WU_BP.xlsx"
 "%GIT_CMD%" add -f "webapp/Reportes_Individuales_CSV/Ranking.csv"
 "%GIT_CMD%" commit -m "Actualizacion diaria del Dashboard de Alertas" >nul 2>&1
-
-:: Por si hubo cambios remotos de ultimo segundo
-"%GIT_CMD%" pull origin main --rebase -X theirs >nul 2>&1
-
 "%GIT_CMD%" push origin main
 
 echo.
